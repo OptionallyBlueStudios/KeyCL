@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+
+keyclver = "1.0.1"
+
 """
 KeyCL - Keyboard Sound Manager
 Complete application with GUI, keyboard hooks, and system tray integration
@@ -28,6 +31,7 @@ import os
 import threading
 import random
 import time
+import sys
 import json
 from tkinter import messagebox, filedialog
 import pystray
@@ -268,6 +272,15 @@ class KeyCLApp:
 
         # Start keyboard hook
         self.keyboard_hook.start_hook()
+
+        versionget8url = "https://raw.githubusercontent.com/OptionallyBlueStudios/KeyCL/refs/heads/main/src/KeyCL-App-Version.txt"
+
+        response = requests.get(versionget8url)
+        if response.status_code == 200:
+            first_line = response.text.splitlines()[0].strip()
+            if first_line != keyclver:
+                messagebox.showinfo("KeyCL Updater", "Your KeyCL App Is Outdated. This could lead to FATAL errors if you don't update it. Please UPDATE IT NOW. If you have shortcuts pointing to this file location, we recommend copying the code from the new main.pyw to this main.pyw to fix it.")
+                sys.exit()
 
     def apply_saved_settings(self):
         """Apply settings loaded from file"""
