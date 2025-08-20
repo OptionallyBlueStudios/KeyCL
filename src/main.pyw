@@ -26,6 +26,7 @@ import subprocess
 import platform
 import os
 import threading
+import random
 import time
 import json
 from tkinter import messagebox, filedialog
@@ -36,6 +37,15 @@ import pygame
 import keyboard
 import glob
 import re
+
+print('PLEASE MAKE SURE THAT YOU HAVE READ THE DOCUMENTATION BEFORE RUNNING. OTHERWISE, ERRORS WILL HAPPEN AND YOU WILL NOT KNOW HOW TO FIX THEM.')
+print('PLEASE MAKE SURE THAT YOU HAVE READ THE DOCUMENTATION BEFORE RUNNING. OTHERWISE, ERRORS WILL HAPPEN AND YOU WILL NOT KNOW HOW TO FIX THEM.')
+print('PLEASE MAKE SURE THAT YOU HAVE READ THE DOCUMENTATION BEFORE RUNNING. OTHERWISE, ERRORS WILL HAPPEN AND YOU WILL NOT KNOW HOW TO FIX THEM.')
+print('PLEASE MAKE SURE THAT YOU HAVE READ THE DOCUMENTATION BEFORE RUNNING. OTHERWISE, ERRORS WILL HAPPEN AND YOU WILL NOT KNOW HOW TO FIX THEM.')
+print('PLEASE MAKE SURE THAT YOU HAVE READ THE DOCUMENTATION BEFORE RUNNING. OTHERWISE, ERRORS WILL HAPPEN AND YOU WILL NOT KNOW HOW TO FIX THEM.')
+print('PLEASE MAKE SURE THAT YOU HAVE READ THE DOCUMENTATION BEFORE RUNNING. OTHERWISE, ERRORS WILL HAPPEN AND YOU WILL NOT KNOW HOW TO FIX THEM.')
+print('PLEASE MAKE SURE THAT YOU HAVE READ THE DOCUMENTATION BEFORE RUNNING. OTHERWISE, ERRORS WILL HAPPEN AND YOU WILL NOT KNOW HOW TO FIX THEM.')
+print('PLEASE MAKE SURE THAT YOU HAVE READ THE DOCUMENTATION BEFORE RUNNING. OTHERWISE, ERRORS WILL HAPPEN AND YOU WILL NOT KNOW HOW TO FIX THEM.')
 
 # New dependency for fetching/downloading
 try:
@@ -656,7 +666,8 @@ class KeyCLApp:
             if ext not in [".mp3", ".wav", ".ogg", ".m4a"]:
                 # Fallback to .mp3 when extension is unknown
                 ext = ".mp3"
-            audio_filename = f"{title}{ext}"
+            rannum = random.randint(10000, 99999)
+            audio_filename = f"{title}-{rannum}{ext}"
             audio_path = os.path.join(self.sound_manager.sounds_folder, audio_filename)
 
             # Download audio
@@ -1058,3 +1069,8 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+# yay im the last line
+# no you're not!!!!!!
