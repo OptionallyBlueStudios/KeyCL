@@ -1,6 +1,10 @@
 # KeyCl
 A Simple App To Customise Your Keyboard Sound! Pronounced: "Key-Cull"
 
+## CURRENT BUGS THAT EXIST
+- An error shows when downloading a sound from online using the sound browser when there is actually no error
+- Errors happen in the console when nothing is wrong
+
 ## Installation
 1) `pip install -r requirements.txt`
 2) Go to src
