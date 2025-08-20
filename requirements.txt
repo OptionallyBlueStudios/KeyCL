@@ -1,0 +1,6 @@
+customtkinter
+pygame
+keyboard
+pystray
+Pillow
+requests
