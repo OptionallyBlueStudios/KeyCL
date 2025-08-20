@@ -33,3 +33,4 @@ Make sure if you are submitting a PR then you put your keyclsound files in the s
 - Icon: [Pixel Vectors by Vecteezy](https://www.vecteezy.com/free-vector/pixel)
 
 made w/ help from ai... ye sorry uhh i was just tired
+i understand how it works its just i never know how to put all that stuff together so i use ai :)
