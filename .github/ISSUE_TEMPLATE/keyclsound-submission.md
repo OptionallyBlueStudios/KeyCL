@@ -2,7 +2,7 @@
 name: keyclsound Submission
 about: Enter your keyclsound submissions
 title: ''
-labels: ''
+labels: keyclsound Submission
 assignees: ''
 
 ---
