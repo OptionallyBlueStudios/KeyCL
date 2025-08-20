@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 # wow... 10,000 lines
+# ITS 1,000 YOU DUMMY
 """
 KeyCL - Keyboard Sound Manager
 Complete application with GUI, keyboard hooks, and system tray integration
