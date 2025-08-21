@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
-keyclver = "1.0.1"
+
+keycl_soundeng_overlap = False
+keyclver = "1.1.0"
 
 """
 KeyCL - Keyboard Sound Manager
@@ -147,8 +149,10 @@ class SoundManager:
                 except pygame.error as e:
                     print(f"Could not load {file_path}: {e}")
 
-    def play_sound(self, sound_name=None):
-        """Play a sound effect with low-latency approach"""
+    def play_sound(self, sound_name=None, play_time=2.0, fade_time=500):
+        """
+        Play a sound effect with low-latency approach and allow overlap.
+        """
         if not self.enabled:
             return
 
@@ -159,8 +163,15 @@ class SoundManager:
             try:
                 sound = self.sounds[sound_name]
                 sound.set_volume(self.volume)
-                # Playing on dedicated channel replaces previous sound -> less lag/backlog
-                self.channel.play(sound)
+
+                # Get a free channel or fallback to channel 0
+                channel = pygame.mixer.find_channel()
+                if channel is None:
+                    channel = pygame.mixer.Channel(0)
+
+                # Play sound normally (no cutoff, no fadeout)
+                channel.play(sound)
+
             except Exception as e:
                 print(f"Error playing sound {sound_name}: {e}")
 
