@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/customtkinterfeel.css">
+  <title>KeyCL Online Sound Library</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .sound-card {
+      border-radius: 10px;
+      padding: 15px;
+      margin: 10px 0;
+    }
+
+    .sound-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9em;
+      margin-top: 10px;
+    }
+
+    .sound-meta span {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>KeyCL Online Sound Library</h1>
+  <div id="sound-container"></div>
+
+  <script>
+    const repoApi = "https://api.github.com/repos/OptionallyBlueStudios/KeyCL/contents/sounds";
+
+    async function fetchSounds() {
+      try {
+        const res = await fetch(repoApi);
+        const files = await res.json();
+
+        // Only get .keyclsound files in root (not folders)
+        const soundFiles = files.filter(file => file.type === "file" && file.name.endsWith(".keyclsound"));
+
+        for (const file of soundFiles) {
+          const fileRes = await fetch(file.download_url);
+          const text = await fileRes.text();
+
+          const soundData = parseKeyCL(text);
+          renderSound(soundData);
+        }
+      } catch (err) {
+        console.error("Error loading sounds:", err);
+      }
+    }
+
+    function parseKeyCL(content) {
+      const data = {};
+      content.split("\n").forEach(line => {
+        const [key, ...rest] = line.split(":");
+        if (key && rest.length) {
+          data[key.trim().toLowerCase()] = rest.join(":").trim();
+        }
+      });
+
+      return {
+        title: data.title || "Untitled Sound",
+        author: data.author || "Unknown",
+        description: data.description || "",
+        tags: data.tags || "",
+        url: data.url || ""
+      };
+    }
+
+    function renderSound(sound) {
+      const container = document.getElementById("sound-container");
+
+      const div = document.createElement("div");
+      div.className = "sound-card";
+
+      div.innerHTML = `
+        <h3>${sound.title}</h3>
+        <p>${sound.description}</p>
+        <div class="sound-meta">
+          <span>Author: ${sound.author}</span>
+          <span>Tags: ${sound.tags}</span>
+        </div>
+        ${sound.url ? `<audio controls src="${sound.url}"></audio>` : ""}
+      `;
+
+      container.appendChild(div);
+    }
+
+    fetchSounds();
+  </script>
+</body>
+</html>
