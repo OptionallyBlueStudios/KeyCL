@@ -14,6 +14,9 @@ A Simple App To Customise Your Keyboard Sound! Pronounced: "Key-Cull"
 ## Contributing
 You are welcome to contribute by submitting an issue, pull request or other.
 
+## Generator
+Download the generator from src and run it in sounds folder. For bulk only.
+
 ## keyclsound
 `keycldsound` is our sound file for KeyCL. It stores metadata about the song and a download link for it. An example one is below. You can add one of these to this repo by submitting a pull request after forking (recommended for multiple files) OR create an issue and select the keyclsound template and put your keyclsound code in the box where you are asked (for a small ammount- 1-3).
 
