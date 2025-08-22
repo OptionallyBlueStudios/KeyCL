@@ -38,67 +38,81 @@
   <div id="sound-container"></div>
 
   <script>
-    const repoApi = "https://api.github.com/repos/OptionallyBlueStudios/KeyCL/contents/sounds";
+  const repoApi = "https://api.github.com/repos/OptionallyBlueStudios/KeyCL/contents/sounds";
 
-    async function fetchSounds() {
-      try {
-        const res = await fetch(repoApi);
-        const files = await res.json();
+  async function fetchSounds() {
+    try {
+      const res = await fetch(repoApi);
+      const files = await res.json();
 
-        // Only get .keyclsound files in root (not folders)
-        const soundFiles = files.filter(file => file.type === "file" && file.name.endsWith(".keyclsound"));
+      // Only get .keyclsound files in root (not folders)
+      const soundFiles = files.filter(file => file.type === "file" && file.name.endsWith(".keyclsound"));
 
-        for (const file of soundFiles) {
-          const fileRes = await fetch(file.download_url);
-          const text = await fileRes.text();
+      for (const file of soundFiles) {
+        const fileRes = await fetch(file.download_url);
+        const text = await fileRes.text();
 
-          const soundData = parseKeyCL(text);
-          renderSound(soundData, file.name); // Pass file name here
-        }
-      } catch (err) {
-        console.error("Error loading sounds:", err);
+        const soundData = parseKeyCL(text);
+        renderSound(soundData, file.name); // Pass file name here
       }
+    } catch (err) {
+      console.error("Error loading sounds:", err);
     }
+  }
 
-    function parseKeyCL(content) {
-      const data = {};
-      content.split("\n").forEach(line => {
-        const [key, ...rest] = line.split(":");
-        if (key && rest.length) {
-          data[key.trim().toLowerCase()] = rest.join(":").trim();
-        }
-      });
+  function parseKeyCL(content) {
+    const data = {};
+    content.split("\n").forEach(line => {
+      const [key, ...rest] = line.split(":");
+      if (key && rest.length) {
+        data[key.trim().toLowerCase()] = rest.join(":").trim();
+      }
+    });
 
-      return {
-        title: data.title || "Untitled Sound",
-        author: data.author || "Unknown",
-        description: data.description || "",
-        tags: data.tags || "",
-        url: data.url || ""
-      };
-    }
+    return {
+      title: data.title || "Untitled Sound",
+      author: data.author || "Unknown",
+      description: data.description || "",
+      tags: data.tags || "",
+      url: data.url || ""
+    };
+  }
 
-    function renderSound(sound, fileName) {
-      const container = document.getElementById("sound-container");
+  function renderSound(sound, fileName) {
+    const container = document.getElementById("sound-container");
 
-      const div = document.createElement("div");
-      div.className = "sound-card";
+    // Remove the file extension for the id
+    const idName = fileName.replace(/\.keyclsound$/i, "");
 
-      div.innerHTML = `
-        <h3>${sound.title}</h3>
-        <p><strong>File:</strong> ${fileName}</p> <!-- Added file name -->
-        <p>${sound.description}</p>
-        <div class="sound-meta">
-          <span>Author: ${sound.author}</span>
-          <span>Tags: ${sound.tags}</span>
-        </div>
-        ${sound.url ? `<audio controls src="${sound.url}"></audio>` : ""}
-      `;
+    const div = document.createElement("div");
+    div.className = "sound-card";
+    div.id = idName;
 
-      container.appendChild(div);
-    }
+    div.innerHTML = `
+      <h3>${sound.title}</h3>
+      <p><strong>File:</strong> ${fileName}</p>
+      <p>${sound.description}</p>
+      <div class="sound-meta">
+        <span>Author: ${sound.author}</span>
+        <span>Tags: ${sound.tags}</span>
+      </div>
+      ${sound.url ? `<audio controls src="${sound.url}"></audio>` : ""}
+      <button class="copy-link">Copy Link</button>
+    `;
 
-    fetchSounds();
+    container.appendChild(div);
+
+    // Add copy link functionality
+    const copyBtn = div.querySelector(".copy-link");
+    copyBtn.addEventListener("click", () => {
+      const link = `${window.location.origin}${window.location.pathname}#${idName}`;
+      navigator.clipboard.writeText(link)
+        .then(() => alert("Link copied!"))
+        .catch(err => console.error("Failed to copy link:", err));
+    });
+  }
+
+  fetchSounds();
   </script>
 </body>
 </html>
