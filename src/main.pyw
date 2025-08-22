@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
-
+systemabout = False
+keycl_demode = False
+systheme = False
 keycl_soundeng_overlap = False
 keyclver = "1.1.0"
 soundcutsoff = 2
@@ -719,11 +721,16 @@ class KeyCLApp:
             messagebox.showinfo("Installed", f"Installed: {title}")
 
         except Exception as e:
-            messagebox.showerror("Install Failed", f"Download or install failed:\n{e}")
+            if keycl_demode == False:
+                messagebox.showerror("Install Failed", f"Download or install failed:\n{e}")
 
     # -------- end installers --------
 
     def show_settings_view(self):
+        global keycl_demode
+        devmode = self.settings_manager.get('devmoder3827', 'de9847532hjkwen')
+        if devmode == 'de9847532hjkwen':  # Compare to the secret value
+            keycl_demode = True  # Enable the global variable
         self.current_view = "settings"
         self.update_button_states("settings")
         self.clear_main_frame()
